@@ -27,4 +27,4 @@ New versions are offered when you start the game (**Update and restart**). Only 
 ## Known limits
 
 - When MCC updates, Reach Renaissance stops starting until a new release supports that update.
-- This is an early test build: expect bugs. Logs are in `%LOCALAPPDATA%\ReachRenaissance\runs`; zip the newest folder for a bug report (it contains the addresses of players you played with, so send it to the developers rather than posting it).
+- This is an early test build: expect bugs. Logs are in `%LOCALAPPDATA%\ReachRenaissance\runs`; zip the newest folder for a bug report. From 0.1.2 on, internet addresses in the logs are masked; with 0.1.1, send logs to the developers privately rather than posting them.
