@@ -1,5 +1,9 @@
 # Reach Renaissance
 
+## ⬇️ [Download the latest version](../../releases/latest)
+
+On the release page, click the **Download** link at the top. Already playing? The game updates itself when it starts.
+
 Halo: Reach multiplayer, Firefight and Campaign with the Xbox 360 menus, playable over the internet, without opening MCC.
 
 A free fan project, not affiliated with Microsoft, Halo Studios, 343 Industries or Bungie. No game files are included: you need your own copy of the game.
