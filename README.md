@@ -18,7 +18,7 @@ A free fan project, not affiliated with Microsoft, Halo Studios, 343 Industries 
 
 1. From [Releases](../../releases/latest), download `ReachRenaissance-v<version>.zip` and `SHA256SUMS.txt`.
 2. Optional: check the download. In PowerShell, `Get-FileHash ReachRenaissance-v<version>.zip` should print the hash listed in `SHA256SUMS.txt`.
-3. Unzip anywhere (not inside the MCC folder) and double-click `Reach Renaissance.exe`. Windows may say "Windows protected your PC" because the program isn't signed: **More info**, then **Run anyway**.
+3. Unzip the whole folder anywhere (not inside the MCC folder) and double-click `Reach Renaissance.exe` inside it. Keep the .exe in that folder: it won't start if you move it out on its own. For a desktop icon, right-click it and choose **Send to > Desktop (create shortcut)**. Windows may say "Windows protected your PC" because the program isn't signed: **More info**, then **Run anyway**.
 
 New versions are offered when you start the game (**Update and restart**). Only releases signed with the project's key install.
 
