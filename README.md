@@ -2,97 +2,176 @@
 
 **A test build for Linux, Steam Deck and Mac (Wine), not a release.** Windows players: use the [latest release](https://github.com/NETF1ix/reach-renaissance-releases/releases/latest) instead.
 
-**Don't update this build:** if the launcher asks to update, answer **No**, and in the menus press **LATER**.
+**You need two zips:** the official `ReachRenaissance-v0.1.22.zip` from the [0.1.22 release](https://github.com/NETF1ix/reach-renaissance-releases/releases/tag/v0.1.22) (under Assets), and this test kit, `ReachRenaissance-v0.1.22-proton-kit-3a493906.zip`, from the file list above (click it, then the download button). Unpack them from a terminal as below, not with Ark or a file manager, and **don't use sudo for any of it.**
 
-The steps:
+This build doesn't offer updates; when a new release comes out, wait for the next test build.
+
+The steps (also in the kit as PROTON-TEST-README.txt):
 
 ```text
-OPEN FIRST: Reach Renaissance Proton test build
-Test build, commit 8e2df4f, 22 Oct 2026
-===============================================
+Reach Renaissance Proton test build
+Built on 0.1.22, commit 3a493906, 23 Oct 2026
+=============================================
 
-Thanks for testing! This kit holds the 33 files that turn the official
-Reach Renaissance 0.1.19 into a test build for Wine on a Mac and Proton
-on Linux and the Steam Deck (draft PR #141). It's built from the main
-branch, so it also has changes made since 0.1.19 that aren't released
-yet (File Share, the chat show/hide key, Workshop mod warnings and
-blocks, LAN and relay changes). It's a test build, not a release, and
-it will be taken down once testing is done.
+Thanks for testing! This kit holds the 11 files that turn the
+official Reach Renaissance 0.1.22 into a test build with the changes
+for Proton on Linux and the Steam Deck, and Wine on a Mac, that aren't
+in a release yet. It's a test build, not a release, so please don't
+pass it on.
 
-Don't update this build. While 0.1.19 is the newest release, nothing
-is offered. If a newer one comes out while you test, the menus show
-"Reach Renaissance 0.1.x is available": press LATER, not UPDATE AND
-RESTART, and skip "Update to 0.1.x" in the menu. If the launcher asks
-"Update and restart now?", answer No. An update replaces this build
-with an official one, and official 0.1.19 doesn't run under Wine. If
-it happens anyway, delete ~/Games/rr-proton-test and redo step 1.
+Fixed since the last test build, from your reports:
+  - The keyboard works in the menus (your name, chat, search boxes).
+  - The menus draw their own background instead of black.
+  - Leaving a match goes back to the menus. Before, you could be stuck
+    on the backdrop while the menu sounds still played.
+  - B in a match only switches grenades. It also opened the pause
+    menu before.
+  - The mouse pointer shows over the menus.
+  - The controller should work in the menus as soon as they appear.
+    Before, it could do nothing for the first half minute.
+  - Unpacking works with unzip as well as bsdtar, and nothing needs
+    sudo.
+
+Still being worked on:
+  - Moving the window: the menus stay put while you drag and catch up
+    when you let go.
+  - Fullscreen through the desktop. Use the game's own setting
+    instead: Settings > Video > WINDOW MODE > Borderless Fullscreen,
+    and tell us whether that works for you.
+  - The Spartan in the menus under Wine is new in this build. Tell us
+    whether you see him in the Armory and on the player card, or
+    only the menus' own background.
+
+This build doesn't offer updates under Wine: official releases don't
+run under Wine yet, so an update would replace it with one that won't
+start. When a new release comes out, wait for the next test build.
 
 
 You need
 --------
   - Halo: The Master Chief Collection with Halo: Reach, installed and
-    up to date in Steam. On a Mac that's Windows Steam in a Wine
-    bottle (CrossOver, Whisky or other). On Linux and the Deck it's
-    the normal Steam (MCC runs with Proton).
-  - The official ReachRenaissance-v0.1.19.zip, from the release page:
-    https://github.com/NETF1ix/reach-renaissance-releases/releases/tag/v0.1.19
-  - This kit, ReachRenaissance-v0.1.19-proton-kit-8e2df4f.zip, from
-    this page: click it in the file list above, then the download
-    button (Download raw file). Or from a terminal:
-  cd ~/Downloads && curl -LO https://github.com/NETF1ix/reach-renaissance-releases/raw/proton-test-build/ReachRenaissance-v0.1.19-proton-kit-8e2df4f.zip
+    up to date in Steam. On Linux and the Deck that's the normal
+    Steam (MCC runs with Proton). On a Mac it's Windows Steam in a
+    Wine bottle (CrossOver, Whisky or other).
+  - The official ReachRenaissance-v0.1.22.zip, under Assets on the
+    release page:
+    https://github.com/NETF1ix/reach-renaissance-releases/releases/tag/v0.1.22
+  - This kit, ReachRenaissance-v0.1.22-proton-kit-3a493906.zip,
+    from the proton-test-build page: click it in the file list, then
+    the download button (Download raw file).
 
-Keep both as .zip files in Downloads. On a Mac, Safari unzips
-downloads by itself and deletes the .zip, and its way of unzipping
-breaks the official zip. Before downloading, turn off Safari >
-Settings > General > "Open 'safe' files after downloading", or use
-another browser. You can also get the official zip from Terminal:
+Keep both as .zip files in your Downloads folder. Or download both
+from a terminal:
   cd ~/Downloads
-  curl -LO https://github.com/NETF1ix/reach-renaissance-releases/releases/download/v0.1.19/ReachRenaissance-v0.1.19.zip
-If Downloads has a folder named after a zip instead of the zip,
-delete the folder and download the zip again.
+  curl -LO https://github.com/NETF1ix/reach-renaissance-releases/releases/download/v0.1.22/ReachRenaissance-v0.1.22.zip
+  curl -LO https://github.com/NETF1ix/reach-renaissance-releases/raw/proton-test-build/ReachRenaissance-v0.1.22-proton-kit-3a493906.zip
+
+On a Mac, Safari unzips downloads by itself and deletes the .zip, and
+its way of unzipping breaks the official zip. Before downloading,
+turn off Safari > Settings > General > "Open 'safe' files after
+downloading", or use another browser, or the two curl lines above.
+
+On Linux, play it through Steam with Proton, as below. Plain Wine and
+Lutris aren't supported in this test.
+
+Linux Mint: log in to the "Cinnamon" session, not "Cinnamon on
+Wayland". Mint's Wayland session is still experimental and crashed a
+tester's whole desktop. On other desktops (KDE, GNOME), say which
+session you used when you report back.
 
 
-1. Unzip both into a new folder, from a terminal
-------------------------------------------------
-Use a terminal, not Finder or Ark: the official zip stores its folders
-in a Windows format that those apps unpack as flat files. Copy and
-paste each line, then press Return or Enter.
+1. Unpack both into a new folder, from a terminal
+-------------------------------------------------
+Never use sudo for any of this. Files unpacked with sudo belong to
+the system's admin account, and the game can't change them.
 
-Mac (Terminal):
-  mkdir -p ~/Games/rr-proton-test && cd ~/Games/rr-proton-test
-  unzip -oq ~/Downloads/ReachRenaissance-v0.1.19.zip
-  unzip -oq ~/Downloads/ReachRenaissance-v0.1.19-proton-kit-8e2df4f.zip
-  shasum -a 256 -c ReachRenaissance-v0.1.19-proton-kit-8e2df4f-SHA256SUMS.txt | grep -v ': OK$'
-
-macOS may ask whether Terminal can access your Downloads folder:
-click OK. unzip warns that the official zip "appears to use
-backslashes as path separators". That's expected.
+Tested an earlier test build? Delete its folder first:
+  chmod -R u+rwX ~/Games/rr-proton-test; rm -rf ~/Games/rr-proton-test
+If rm still says "Permission denied" (and chmod says "Operation not
+permitted"), the earlier build was unpacked with sudo. This once,
+remove it with sudo:
+  sudo rm -rf ~/Games/rr-proton-test
+Your Steam shortcut and WebView2 stay, so in step 2 just start the
+shortcut. Clear its Launch Options if you set any for the earlier
+build (PROTON_LOG or WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS).
 
 Steam Deck: do everything in Desktop Mode (Steam button > Power >
 Switch to Desktop). Open Konsole from the app menu at the bottom left
 (System > Konsole). Steam + X shows the keyboard. To paste a line in
 Konsole, press Ctrl+Shift+V (Ctrl+V doesn't paste there).
 
-Linux and Steam Deck (Konsole or another terminal):
-  mkdir -p ~/Games/rr-proton-test && cd ~/Games/rr-proton-test
-  bsdtar -xf ~/Downloads/ReachRenaissance-v0.1.19.zip
-  bsdtar -xf ~/Downloads/ReachRenaissance-v0.1.19-proton-kit-8e2df4f.zip
-  sha256sum --quiet -c ReachRenaissance-v0.1.19-proton-kit-8e2df4f-SHA256SUMS.txt
+Use a terminal, not your file manager or Ark: the official zip
+stores its folders in a Windows format that those apps unpack as flat
+files.
 
-SteamOS and Arch have bsdtar. If it says "bsdtar: command not found"
-(Ubuntu, Debian, Mint, Fedora), use the two unzip lines from the Mac
-commands in place of the bsdtar lines.
+Linux and Steam Deck (copy and paste each line, then press Enter):
+  mkdir -p ~/Games/rr-proton-test
+  unzip -oq ~/Downloads/ReachRenaissance-v0.1.22.zip -d ~/Games/rr-proton-test
+  chmod -R u+rwX ~/Games/rr-proton-test
+  unzip -oq ~/Downloads/ReachRenaissance-v0.1.22-proton-kit-3a493906.zip -d ~/Games/rr-proton-test
+  cd ~/Games/rr-proton-test && sha256sum --quiet -c ReachRenaissance-v0.1.22-proton-kit-3a493906-SHA256SUMS.txt
 
-The last command prints nothing when all 773 files match this build.
-If it prints anything, stop: delete ~/Games/rr-proton-test, check that
-both zips are in Downloads, and do step 1 again. If it still prints
-something, send what it printed.
+If the mkdir line says "Permission denied", ~/Games itself was made
+with sudo. Run sudo chown "$USER" ~/Games, then start again from the
+mkdir line.
 
-The game is now in ~/Games/rr-proton-test/ReachRenaissance.
+unzip warns that the official zip "appears to use backslashes as path
+separators". That's expected. The chmod line matters: without it,
+unzip stops with "Permission denied".
+
+If unzip says "command not found", use these two lines in place of
+the two unzip lines and the chmod line:
+  bsdtar -C ~/Games/rr-proton-test -xf ~/Downloads/ReachRenaissance-v0.1.22.zip
+  bsdtar -C ~/Games/rr-proton-test -xf ~/Downloads/ReachRenaissance-v0.1.22-proton-kit-3a493906.zip
+
+If unzip or bsdtar says it can't find or open a zip, run
+  ls -l ~/Downloads/*.zip
+The official zip is 444067001 bytes and the kit about 9666000. A
+different name: a second download is often named "... (1).zip";
+delete the extra copies and use the right name. A different size: the
+download broke, or a web page was saved instead of the zip. Delete it
+and download it again, for example with the curl lines above.
+
+The last line prints nothing when all 778 files match this build. If
+it prints anything, delete ~/Games/rr-proton-test, download both zips
+again and redo this step. If it still prints something, send what it
+printed.
+
+Mac (Terminal):
+  mkdir -p ~/Games/rr-proton-test
+  unzip -oq ~/Downloads/ReachRenaissance-v0.1.22.zip -d ~/Games/rr-proton-test
+  chmod -R u+rwX ~/Games/rr-proton-test
+  unzip -oq ~/Downloads/ReachRenaissance-v0.1.22-proton-kit-3a493906.zip -d ~/Games/rr-proton-test
+  cd ~/Games/rr-proton-test && shasum -a 256 -c ReachRenaissance-v0.1.22-proton-kit-3a493906-SHA256SUMS.txt | grep -v ': OK$'
+macOS may ask whether Terminal can access your Downloads folder: click
+OK. unzip's warning about backslashes is expected here too.
+
+The game is now in ~/Games/rr-proton-test/ReachRenaissance. Follow
+this file, not the Linux and Steam Deck section of the README.txt in
+that folder: that one is for a future release.
 
 
 2. Start it
 -----------
+Linux and Steam Deck, the first time:
+  1. In Steam: Games > Add a Non-Steam Game to My Library > Browse.
+     Set the file type to All Files, pick "Reach Renaissance.exe" in
+     ~/Games/rr-proton-test/ReachRenaissance, then Add Selected
+     Programs.
+  2. Right-click it > Properties. Rename it "Reach Renaissance TEST"
+     so you can tell it apart. Under Compatibility, tick "Force the
+     use of a specific Steam Play compatibility tool" and pick Proton
+     Experimental (or Proton 10 or newer).
+  3. Play it. On a Steam Deck, play it from Desktop Mode first, then
+     try Gaming Mode. The Deck's controls work as an Xbox controller;
+     Steam + X opens the keyboard.
+If MCC isn't found (MCC on an SD card, for example), pick its folder
+when asked: Linux folders are under Z:, SD cards under Z:\run\media.
+Steam from Flathub (Flatpak) can't see ~/Games until you allow it
+once, before adding the game:
+  flatpak override --user --filesystem=~/Games/rr-proton-test com.valvesoftware.Steam
+then quit Steam and start it again.
+
 Mac: use the bottle that has Windows Steam with MCC, and the Wine that
 came with that bottle. Reach Renaissance finds MCC through that Steam.
 Don't run a different Wine (such as Homebrew's) on a CrossOver or
@@ -110,98 +189,61 @@ also save the launcher's messages to rr-launcher.txt on your Desktop.
       W="$HOME/Library/Application Support/com.isaacmarovitz.Whisky/Libraries/Wine/bin/wine64"
       cd ~/Games/rr-proton-test/ReachRenaissance
       WINEPREFIX="<bottle folder>" "$W" "Reach Renaissance.exe" 2>&1 | tee ~/Desktop/rr-launcher.txt
-    (Or click Run... in the bottle in Whisky and pick
-    "Reach Renaissance.exe". Then there's no rr-launcher.txt.)
-  - Plain Wine or Game Porting Toolkit, for a bottle made with that
-    same Wine (the toolkit's command is wine64):
+  - Game Porting Toolkit, for a bottle made with it:
       cd ~/Games/rr-proton-test/ReachRenaissance
-      WINEPREFIX="<bottle folder>" wine "Reach Renaissance.exe" 2>&1 | tee ~/Desktop/rr-launcher.txt
-
-Linux and Steam Deck: in ~/Games/rr-proton-test/ReachRenaissance,
-open README.txt and follow "Linux and Steam Deck" steps 3 to 6 (step 1
-here replaces its step 2). In its step 3, pick "Reach Renaissance.exe"
-in ~/Games/rr-proton-test/ReachRenaissance, not in
-~/Games/ReachRenaissance. Then, in the shortcut's Properties in Steam,
-rename it "Reach Renaissance TEST", so you can tell it apart.
+      WINEPREFIX="<bottle folder>" wine64 "Reach Renaissance.exe" 2>&1 | tee ~/Desktop/rr-launcher.txt
 
 If it says "Reach Renaissance doesn't support Linux/Proton yet", you
-started the official 0.1.19, not this build. Start it from
-rr-proton-test. Its VERSION.txt says "Proton test build".
+started an official release, not this build. Start it from
+~/Games/rr-proton-test. Its VERSION.txt says "Proton test build".
 
 
 3. Install WebView2 when asked
 ------------------------------
-When the launcher offers to install Microsoft Edge WebView2 Runtime,
-answer Yes. The menus need it. The install takes a few minutes and
-needs the internet. Then play as usual.
+The first time, the launcher offers to install Microsoft Edge WebView2
+Runtime: answer Yes. The menus need it. The install takes a few
+minutes and needs the internet. Then play as usual.
 
-This changes the bottle (or Proton prefix) for good: WebView2 and Edge
-Update are installed, and WebView2 is set to run as Windows 7 there.
-On a Mac, if other programs in that bottle use WebView2, test in a
-copy of the bottle.
-
-
-If the menus stay empty
------------------------
-Try each of these, one at a time, then both together:
-  WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--no-sandbox
-  WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--disable-gpu
-  WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS="--no-sandbox --disable-gpu"
-
-On a Mac, put it at the start of the command's last line, for example:
-  WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--no-sandbox "$CX" --bottle "<bottle name>" "$PWD/Reach Renaissance.exe" 2>&1 | tee ~/Desktop/rr-launcher.txt
-
-With Proton, set the shortcut's Launch Options in Steam to it followed
-by %command%, for example:
-  WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--no-sandbox %command%
-
-
-What's different under Wine
----------------------------
-None of this runs on Windows.
-  - The launcher detects Wine and offers to install Microsoft Edge
-    WebView2 Runtime when it's missing, and runs it as Windows 7. That's
-    the known fix for WebView2's empty window under Wine, which lacks
-    DirectComposition.
-  - Updates work without curl and tar.
-  - Linux folders hidden by a dot (like ~/.local/share/Steam) show up
-    in the folder picker.
-  - No pictures of the game window are taken, because they come out
-    black under Wine. The Theme page says there's no preview.
-  - Steam Workshop links (for mods a game needs) open in your system's
-    own Steam. That's right for Proton. On a Mac they go to the Mac's
-    Steam, not the one in the bottle, so tell us what happens when you
-    join a game that needs a mod.
+This changes the Proton prefix (or the Mac bottle) for good: WebView2
+and Edge Update are installed, and WebView2 is set to run as Windows
+7 there. On a Mac, if other programs in that bottle use WebView2,
+test in a copy of the bottle.
 
 
 What to send back
 -----------------
-Reply to whoever sent you this kit with:
-  - Your setup: Mac (Intel or Apple Silicon) and macOS version, or
-    your Linux distribution or SteamOS version. Your Wine (CrossOver,
-    Whisky, Game Porting Toolkit, plain Wine or Proton) and its
-    version. On a Mac, the graphics backend (D3DMetal, DXMT, DXVK with
-    MoltenVK, or WineD3D).
-  - The WebView2 install: did it finish, and what did the launcher say?
-  - The menus: do they draw? Empty, black, white or working? Do mouse,
-    keyboard and controller work in them?
-  - The menus' background: is the game's scene (the Spartan, the
-    backdrop) visible behind the menus, or is the background solid?
+Reply to whoever sent you this build with:
+  - Your setup: Linux distribution (or SteamOS version), desktop (KDE,
+    GNOME, Cinnamon...) and session (X11 or Wayland), graphics card,
+    and the Proton version. On a Mac: Intel or Apple Silicon, macOS
+    version, and your Wine (CrossOver, Whisky or the toolkit).
+  - The menus: do they draw? Do the mouse, keyboard and controller
+    work in them? Can you type your name or a chat message?
+  - Leaving a match: do you get back to the menus?
   - The game: does it start? Do sound and input work in a match?
-  - Logs, below.
+  - Anything that looked or felt wrong, with a screenshot if you can.
+  - The logs, below.
+
+Logs on Linux and the Deck: send the run folder of the session that
+went wrong. Each start makes one. Right after that session, these two
+lines put the newest one on your Desktop as rr-run.tar.gz:
+  RUN=$(ls -td ~/.steam/steam/steamapps/compatdata/*/pfx/drive_c/users/steamuser/AppData/Local/ReachRenaissance/runs/*/ ~/.local/share/Steam/steamapps/compatdata/*/pfx/drive_c/users/steamuser/AppData/Local/ReachRenaissance/runs/*/ ~/.var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/compatdata/*/pfx/drive_c/users/steamuser/AppData/Local/ReachRenaissance/runs/*/ 2>/dev/null | head -1)
+  tar -czf ~/Desktop/rr-run.tar.gz -C "$RUN.." "$(basename "$RUN")"
+If there's no Desktop folder, use ~/rr-run.tar.gz instead.
+
+For a crash, missing menus or a failed WebView2 install, also send
+Proton's log: set the shortcut's Launch Options to
+  PROTON_LOG=1 %command%
+play once more until it goes wrong, and send steam-<number>.log from
+your home folder (with Flatpak Steam, from
+~/.var/app/com.valvesoftware.Steam instead). Then clear the Launch Options again: the log slows
+the game down, so don't judge smoothness with it on.
 
 Logs on a Mac: rr-launcher.txt from your Desktop, and the newest
 folder in the bottle's
   drive_c/users/<Wine user>/AppData/Local/ReachRenaissance/runs
 zipped (right-click > Compress). The Wine user is crossover in
-CrossOver, and usually your Mac user name in Whisky and plain Wine.
-CrossOver's bottles are in ~/Library/Application Support/CrossOver/
-Bottles. In Finder, Go > Go to Folder (Cmd+Shift+G) opens a path.
-
-Logs on Linux and the Deck: set the shortcut's Launch Options to
-PROTON_LOG=1 %command% (anything else goes before %command% too), play
-once, and send steam-<number>.log from your home folder. Also send the
-newest run folder. These lines put it on your Desktop as rr-run.zip:
-  RUN=$(ls -td ~/.local/share/Steam/steamapps/compatdata/*/pfx/drive_c/users/steamuser/AppData/Local/ReachRenaissance/runs/*/ | head -1)
-  bsdtar -a -cf ~/Desktop/rr-run.zip -C "$RUN.." "$(basename "$RUN")"
+CrossOver, and usually your Mac user name in Whisky. CrossOver's
+bottles are in ~/Library/Application Support/CrossOver/Bottles. In
+Finder, Go > Go to Folder (Cmd+Shift+G) opens a path.
 ```
