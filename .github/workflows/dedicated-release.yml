@@ -1,0 +1,112 @@
+# Builds the dedicated host for Windows and Linux whenever a release is published
+# in this repository, and attaches both files plus checksums to that release.
+#
+# Nothing to run by hand: publishing a release tagged like v0.1.32 starts this.
+# To rebuild for a release that already exists: Actions -> "Attach dedicated builds"
+# -> Run workflow, and give it that tag.
+#
+# The panel installer is too large to keep in git, so it is fetched from the
+# "panel-latest" release in this repository. If that asset is missing the builds are
+# still made, just without a panel\ folder (the job prints a warning).
+name: Attach dedicated builds
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to attach the builds to (for example v0.1.32)
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dedicated-${{ github.event.release.tag_name || github.event.inputs.tag }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # The recipe lives on the default branch, not on the release tag, so that a
+      # release cut from an older commit still builds with the current workflow.
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Read the version from the tag
+        id: v
+        env:
+          TAG: ${{ github.event_name == 'release' && github.event.release.tag_name || github.event.inputs.tag }}
+        run: |
+          version="${TAG#v}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if [[ "$version" =~ ^[0-9]+(\.[0-9]+){1,3}([-+][0-9A-Za-z.-]+)?$ ]]; then
+            echo "skip=0" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::$TAG is not a game version, so no dedicated builds are attached."
+            echo "skip=1" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-dotnet@v4
+        if: steps.v.outputs.skip != '1'
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Add the OmniVault panel installer
+        if: steps.v.outputs.skip != '1'
+        run: |
+          mkdir -p dedicated/server-template/panel
+          url="https://github.com/${GITHUB_REPOSITORY}/releases/download/panel-latest/OmniVault-Setup.exe"
+          if curl -fsSL --retry 3 -o dedicated/server-template/panel/OmniVault-Setup.exe "$url"; then
+            echo "panel installer: $(stat -c%s dedicated/server-template/panel/OmniVault-Setup.exe) bytes"
+          else
+            echo "::warning::no panel installer at $url - these builds have no panel folder"
+            rm -rf dedicated/server-template/panel
+          fi
+
+      - name: Build windows x64
+        if: steps.v.outputs.skip != '1'
+        run: |
+          dotnet publish dedicated -c Release -r win-x64 --self-contained true \
+            -p:Version=${{ steps.v.outputs.version }} \
+            -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true \
+            -p:EnableCompressionInSingleFile=true -o out/win --nologo
+
+      - name: Build linux x64
+        if: steps.v.outputs.skip != '1'
+        run: |
+          dotnet publish dedicated -c Release -r linux-x64 --self-contained true \
+            -p:Version=${{ steps.v.outputs.version }} \
+            -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true \
+            -p:EnableCompressionInSingleFile=true -o out/linux --nologo
+
+      - name: Name the files and checksum them
+        if: steps.v.outputs.skip != '1'
+        run: |
+          v="${{ steps.v.outputs.version }}"
+          mkdir -p upload
+          cp out/win/project-renaissance-dedicated.exe "upload/project-renaissance-dedicated-v$v.exe"
+          cp out/linux/project-renaissance-dedicated "upload/project-renaissance-dedicated-v$v-linux"
+          chmod +x "upload/project-renaissance-dedicated-v$v-linux"
+          cd upload
+          sha256sum "project-renaissance-dedicated-v$v.exe" "project-renaissance-dedicated-v$v-linux" \
+            > project-renaissance-dedicated-SHA256SUMS.txt
+          ls -l
+
+      - name: Attach them to the release
+        if: steps.v.outputs.skip != '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.v.outputs.tag }}
+        run: |
+          gh release upload "$TAG" \
+            upload/project-renaissance-dedicated-v*.exe \
+            upload/project-renaissance-dedicated-v*-linux \
+            upload/project-renaissance-dedicated-SHA256SUMS.txt \
+            --repo "$GITHUB_REPOSITORY" --clobber
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets \
+            --jq '.assets[] | "\(.size)\t\(.name)"'

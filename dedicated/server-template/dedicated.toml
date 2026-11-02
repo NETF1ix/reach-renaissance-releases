@@ -1,0 +1,165 @@
+# Project Renaissance dedicated servers for Halo: Reach
+#
+# Start every server below with:
+#     project-renaissance-dedicated dedicated
+# Check every server and print what would run, without starting or writing:
+#     project-renaissance-dedicated dedicated --dry-run
+# Check the setup without starting servers:
+#     project-renaissance-dedicated check
+# List the maps and game types you can name below and in playlists:
+#     project-renaissance-dedicated content
+# Guide: README.md next to this file.
+#
+# Relative paths are relative to this file's folder.
+# Windows paths are easiest in single quotes, so backslashes stay as they are:
+#     game = 'C:\Games\ReachRenaissance'
+
+# The folder that holds bin\host-probe.exe. Left out (or as "game"), it is the
+# game folder next to this file: copy the Reach Renaissance files into it and the
+# whole folder can go to a VPS as it is - see game/COPY GAME FILES HERE.txt.
+# A path to a Reach Renaissance folder somewhere else works just as well.
+game = "game"
+
+# Where Halo: Reach lives, if host-probe can't find your Steam install itself.
+# Leave it out and it looks for it on its own.
+#mcc = 'C:\Program Files (x86)\Steam\steamapps\common\Halo The Master Chief Collection'
+
+# Maps, game types and mods shared by every server:
+#   content/Game Modes   .bin game variants       (a playlist's "game")
+#   content/Maps         saved Forge maps, .mvar  (a playlist's "map_variant")
+#   content/Mods         one folder per custom .map, with its .mapinfo
+content = "content"
+
+# One folder per server: its server.ini, its playlist, its log and status.json,
+# and the state of its own admin dashboard.
+data = "data"
+
+# The ban list every server shares and the dashboards write.
+bans = "bans.json"
+
+# The server list every server with public = true registers with, so players find
+# it in the game's own browser. This is Reach Renaissance's list.
+master = "https://2-29-30-1.sslip.io:11700"
+
+# Ask each server's router to open its game port (UPnP). Leave off when you
+# forward the ports yourself or the host is a virtual machine.
+upnp = false
+
+# Restart every server when the game updates under it (VERSION.txt or
+# bin\host-probe.exe changes), so nobody meets a server on an older build than
+# they run. On by default.
+#restart_on_update = false
+
+# Keep the servers on the game's newest release. Once at start, then every
+# update_check_minutes (0 checks only at start), this host asks the release page
+# for a newer build, downloads it, checks its SHA-256, stops the servers for the
+# file swap, and starts them again on it. mcc/ and everything this host doesn't
+# own stay as they are. Off by default; turn it on for a host left alone.
+auto_update = false
+update_check_minutes = 30
+# The GitHub repository whose releases are the game builds.
+#update_repo = "NETF1ix/reach-renaissance-releases"
+# Which .zip in that release is the build.
+#update_asset = "ReachRenaissance-*.zip"
+
+# Used by servers that don't set their own name below.
+host_name = "Dedicated server"
+
+# RCON: read and run the servers from an admin panel (Source RCON), one port per
+# server. Off until you set a password. Commands: status, players, say, kick,
+# ban, unban, bans, endgame, endround, next, restart, reload, help.
+[rcon]
+password = "change-me"
+# Where RCON listens. 127.0.0.1 is this PC only; 0.0.0.0 lets another machine or
+# a panel in Docker reach it, and also anyone else who finds the port.
+bind = "127.0.0.1"
+# What a panel should connect to. This host doesn't read it; it is here so a
+# panel that reads this file finds the servers by itself.
+address = "127.0.0.1"
+
+# Announcements: one line from the server into the players' in-game chat, every
+# so many minutes. It is the engine's own match chat underneath (the same path as
+# `say` over RCON), so it is only said while someone is in the server, and a
+# server that has just gone from empty to occupied says its line at once.
+# Several messages under `messages` are said in turn. every_minutes = 0 turns it off.
+#[announce]
+#every_minutes = 10
+#message = "Welcome! Join our discord at https://discord.gg/example"
+
+# Linux only. How the game's Windows engine is started: wine from PATH when this
+# is left out, else this command line (a Proton command, or a wrapper script of
+# your own). README.md has a Linux section.
+#runner = "/home/you/.steam/steam/steamapps/common/Proton - Experimental/proton run"
+# The Wine prefix that runner uses, and where C:\ paths are looked up.
+#wine_prefix = "~/.wine"
+# Where the client keeps fileshare/ and playlists/ (inside the prefix on Linux).
+# Left out, this host looks in the usual places.
+#client_data = "~/.steam/steam/steamapps/compatdata/976730/pfx/drive_c/users/steamuser/AppData/Local/ReachRenaissance"
+
+# Project Reclaimer has public_address here. Reach Renaissance lists the address
+# its server lists can see for themselves, so there is nothing this host could
+# write it to. Leave it out.
+
+# Used by every server unless its own [[server]] block says otherwise.
+[defaults]
+# List each server where players' matchmaking server list shows it.
+public = true
+# Also answer on your own network, so players in your house join directly.
+lan = true
+# Players each server admits at once. 33 and up needs big_lobby = 64.
+max_players = 16
+# The engine's lobby capacity. Leave it out to keep it the same as max_players.
+#capacity = 16
+# Minutes a game may run.
+time_limit = 12
+# Hold each server's first game until a player has joined it, so that join is one
+# the engine can spawn (it can't put anyone into a game already running: black
+# screen, DEAD). It gives up after about 45 s and starts anyway. On by default.
+#wait_for_players = false
+# Leave a game alone when someone joins it. On, this host ends that game for the
+# joiner while their client is still loading it, and the join is dropped (or it
+# loads the next map and faults). Off, a join is just a join. See README.md.
+#fresh_game_on_join = false
+# Seconds a late joiner gets before that game is ended, when the line above is on.
+#fresh_game_join_delay = 2
+# Rounds the engine's main loop is paced to each second (0 leaves its own pacing
+# alone). 60 is the game's own rate and costs a little less than 120.
+#loop_hz = 60
+# Reach Renaissance's big-lobby patch: 64 admits up to 64 players, 0 is off.
+#big_lobby = 64
+# Custom map folders every server loads (names under content/Mods, or paths).
+#mods = []
+
+# One [[server]] block per server. Every server needs a unique name and its own
+# UDP game port; 40011 through 40013 are the ports hosting uses by default.
+[[server]]
+name = "Renaissance Slayer"
+port = 40011
+playlist = "playlists/slayer.playlist.json"
+
+# A server that plays one map and game type instead of a playlist:
+#[[server]]
+#name = "Renaissance ForgeWorld"
+#port = 40012
+#map = "ForgeWorld"
+#game = "Slayer"
+#map_variant = "Maps/mymap.mvar"    # optional: a saved Forge map
+
+# A hidden server for a group, on another port:
+#[[server]]
+#name = "Friends only"
+#port = 40013
+#public = false
+#max_players = 32
+#big_lobby = 64                     # no: big_lobby belongs in [defaults]
+#playlist = "playlists/slayer.playlist.json"
+
+# A [[server]] block may override from [defaults]: public, lan, max_players,
+# capacity, time_limit, upnp, mods, wait_for_players, fresh_game_on_join,
+# fresh_game_join_delay, loop_hz, and its own admin_port, rcon_port, rcon and
+# enabled.
+
+# Game types and saved Forge maps live in the server folder itself, next to this
+# file: "Game Modes\" (or "GameTypes\") and "Maps\". A playlist may name a path
+# from another PC (C:\Users\You\...\MY GAME.bin); the file name is looked up in
+# those folders, so copying this folder to a VPS carries everything it plays.

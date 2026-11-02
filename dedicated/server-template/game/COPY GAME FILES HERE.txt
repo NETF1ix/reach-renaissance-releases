@@ -1,0 +1,39 @@
+Copy the game's own files into this folder, keeping their structure. Nothing in
+here is distributed with this host: they are the game's files, from your own copy.
+
+  bin/host-probe.exe        what actually runs, one process per server
+  bin/*.dll, bin/vgmstream  what that engine loads
+  data/                     the game's own data (strings, launch blocks, armor)
+  themes/                   only the menus use these
+  VERSION.txt               the build every player must be on
+
+That is everything in the Reach Renaissance zip. The launcher
+"Reach Renaissance.exe" does not need copying: a server is bin/host-probe.exe
+started with the settings in dedicated.toml, so nobody clicks anything on a VPS.
+A release unzipped one level down (game/ReachRenaissance/bin/...) is found too.
+
+Halo: Reach itself
+  Reach Renaissance needs Halo: The Master Chief Collection with Halo: Reach
+  installed: the engine reads haloreach.dll and the maps out of it. On a VPS,
+  install MCC through Steam as usual, or copy the MCC folder in and say where
+  it is in dedicated.toml:
+
+      mcc = 'game/mcc'
+
+  "check" prints which of the two it found. Without either, servers can't load
+  a map.
+
+What the servers play
+  The rotation, and the game types and saved Forge maps it names, stay outside
+  this folder, next to dedicated.toml:
+
+      playlists/           the rotations
+      Game Modes/          .bin game types   (also read as GameTypes/)
+      Maps/                saved Forge maps, .mvar
+      content/             the older shared layout, still read
+
+Then copy this whole folder to the VPS and run
+
+      ./project-renaissance-dedicated check
+
+which names every file it can't find before anything starts.

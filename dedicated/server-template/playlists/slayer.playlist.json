@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "name": "Reach Slayer rotation",
+  "order": "shuffle",
+  "vote": true,
+  "vote_choices": 8,
+  "vote_time": 20,
+  "games": [
+    { "map": "ForgeWorld", "game": "hopper_game_variants/slayer_big_team_054.bin" },
+    { "map": "Boardwalk", "game": "hopper_game_variants/arena_slayer_team_054.bin" },
+    { "map": "Zealot", "game": "hopper_game_variants/arena_slayer_team_054.bin", "weight": 2 },
+    { "map": "ForgeWorld", "game": "game_variants/slayer_054.bin" }
+  ]
+}

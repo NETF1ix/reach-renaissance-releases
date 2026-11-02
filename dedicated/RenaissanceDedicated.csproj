@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>10</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>project-renaissance-dedicated</AssemblyName>
+    <RootNamespace>RenaissanceDedicated</RootNamespace>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <Version>0.1.0</Version>
+    <Product>Project Renaissance dedicated servers</Product>
+    <AssemblyTitle>Project Renaissance dedicated servers</AssemblyTitle>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <ServerGarbageCollection>false</ServerGarbageCollection>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="src/**/*.cs" />
+  </ItemGroup>
+
+  <!-- Templates written into an empty folder on the first run. -->
+  <ItemGroup>
+    <EmbeddedResource Include="server-template/dedicated.toml" LogicalName="tpl/windows.toml" />
+    <EmbeddedResource Include="server-template/dedicated-linux.toml" LogicalName="tpl/linux.toml" />
+    <EmbeddedResource Include="server-template/linux-README.txt" LogicalName="tpl/linux-README.txt" />
+    <EmbeddedResource Include="server-template/content/README.txt" LogicalName="tpl/content/README.txt" />
+    <EmbeddedResource Include="server-template/game/COPY GAME FILES HERE.txt" LogicalName="tpl/game/COPY GAME FILES HERE.txt" />
+    <EmbeddedResource Include="server-template/playlists/slayer.playlist.json" LogicalName="tpl/playlists/slayer.playlist.json" />
+    <!-- The OmniVault panel installer, written into panel\ on a Windows first run. It is a
+         Windows program, so the Linux build leaves it out rather than carrying 88 MB dead weight. -->
+    <EmbeddedResource Include="server-template/panel/OmniVault-Setup.exe" LogicalName="tpl/panel/OmniVault-Setup.exe" Condition="Exists('server-template/panel/OmniVault-Setup.exe') And '$(RuntimeIdentifier)' != 'linux-x64'" />
+  </ItemGroup>
+
+</Project>
