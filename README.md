@@ -8,7 +8,7 @@ Halo: Reach multiplayer, Firefight and Campaign with the Xbox 360 menus, playabl
 
 A free fan project, not affiliated with Microsoft, Halo Studios, 343 Industries or Bungie. No game files are included: you need your own copy of the game.
 
-The Elite models and armor are from The Prophets' Hand by Sel 'Sufumee, NSixNick and Lachiebuzzx, used with permission. Lachiebuzzx made the Halo 2 Councilor and Honor Guard armor sets and other additional armor pieces. See [Credits](CREDITS.md).
+The Elite models and armor were made by Lachiebuzzx, among them the Halo 2 Councilor and Honor Guard armor sets, used with permission. See [Credits](CREDITS.md).
 
 ## What you need
 
