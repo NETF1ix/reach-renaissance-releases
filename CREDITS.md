@@ -10,7 +10,7 @@ The Elite models and armor were made by **Lachiebuzzx**, among them the **Halo 2
 The Elite color system is inspired by the creators of
 **[The Prophets' Hand](https://steamcommunity.com/sharedfiles/filedetails/?id=3101579452)**.
 
-The same credits are in the game: **Main Menu > Credits**, or **Credits** in the Start menu.
+The same credits are in the game: **Credits** in the Start menu.
 
 ## Halo: Reach
 
