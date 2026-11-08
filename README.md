@@ -8,6 +8,8 @@ Halo: Reach multiplayer, Firefight and Campaign with the Xbox 360 menus, playabl
 
 A free fan project, not affiliated with Microsoft, Halo Studios, 343 Industries or Bungie. No game files are included: you need your own copy of the game.
 
+The Elite models and armor were made by Lachiebuzzx, among them the Halo 2 Councilor and Honor Guard armor sets, used with permission. See [Credits](CREDITS.md).
+
 ## What you need
 
 - Windows 10 or 11, 64-bit. Or Linux or a Steam Deck, through Steam's Proton (experimental): see [Linux and Steam Deck](#linux-and-steam-deck).
